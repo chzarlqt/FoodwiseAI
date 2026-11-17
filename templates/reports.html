@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 fw-bold">Exportable Audit Reports</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card p-3 text-center">
+            <h6 class="fw-bold">Daily Waste Report</h6>
+            <p class="small text-muted">Full daily prep vs. waste breakdown</p>
+            <a href="/reports/export/daily_waste" class="btn btn-outline-success btn-sm">Download CSV</a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center">
+            <h6 class="fw-bold">Weekly Demand Report</h6>
+            <p class="small text-muted">7-day attendance & meal volume</p>
+            <a href="/reports/export/weekly_demand" class="btn btn-outline-primary btn-sm">Download CSV</a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center">
+            <h6 class="fw-bold">Monthly Waste Analysis</h6>
+            <p class="small text-muted">30-day cumulative waste trends</p>
+            <a href="/reports/export/monthly_waste" class="btn btn-outline-warning btn-sm">Download CSV</a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center">
+            <h6 class="fw-bold">Cost-Saving Report</h6>
+            <p class="small text-muted">Revenue & waste loss valuation</p>
+            <a href="/reports/export/cost_saving" class="btn btn-outline-dark btn-sm">Download CSV</a>
+        </div>
+    </div>
+</div>
+
+<div class="card p-4">
+    <h5 class="fw-bold mb-3">Recent Audit Preview (Last 10 Entries)</h5>
+    <table class="table table-sm">
+        <thead>
+            <tr><th>Date</th><th>Meals Sold</th><th>Prepared (kg)</th><th>Wasted (kg)</th><th>Revenue</th></tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.date }}</td>
+                <td>{{ log.meals_sold }}</td>
+                <td>{{ log.food_prepared_kg }}</td>
+                <td>{{ log.food_wasted_kg }}</td>
+                <td>₹{{ log.revenue }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 fw-bold">Historical Sales & Waste Logs</h2>
+
+<div class="card p-4">
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Attendance</th>
+                    <th>Meals Sold</th>
+                    <th>Prepared (kg)</th>
+                    <th>Wasted (kg)</th>
+                    <th>Waste %</th>
+                    <th>Revenue (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                {% set wpct = ((log.food_wasted_kg / log.food_prepared_kg) * 100) | round(1) %}
+                <tr>
+                    <td>{{ log.date }}</td>
+                    <td>{{ log.present_students }} / {{ log.enrolled_students }}</td>
+                    <td>{{ log.meals_sold }}</td>
+                    <td>{{ log.food_prepared_kg }} kg</td>
+                    <td>{{ log.food_wasted_kg }} kg</td>
+                    <td><span class="badge bg-{{ 'danger' if wpct > 12 else 'success' }}">{{ wpct }}%</span></td>
+                    <td class="fw-bold">₹{{ log.revenue }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

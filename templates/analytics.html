@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 fw-bold">Food Waste Analytics & AI Diagnostics</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card p-3">
+            <small class="text-muted">7-Day Total Prepared</small>
+            <h3 class="fw-bold">{{ total_prep }} kg</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3">
+            <small class="text-muted">7-Day Total Consumed</small>
+            <h3 class="fw-bold text-success">{{ total_consumed }} kg</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3">
+            <small class="text-muted">Overall Waste %</small>
+            <h3 class="fw-bold text-danger">{{ overall_waste_pct }}%</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3">
+            <small class="text-muted">Est. Monetary Loss</small>
+            <h3 class="fw-bold text-danger">₹{{ monetary_loss }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="card p-4">
+    <h5 class="fw-bold mb-3">AI Category Alerts & High-Waste Risk Items (Threshold: {{ threshold }}%)</h5>
+    <div class="list-group">
+        {% for item in high_risk_items %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>{{ item.name }}</strong> ({{ item.meal_type }}) — Base Demand: {{ item.base_demand }} meals
+            </div>
+            <span class="badge bg-{{ 'danger' if item.waste_risk == 'High' else 'warning text-dark' }}">
+                {{ item.waste_risk }} Waste Risk
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

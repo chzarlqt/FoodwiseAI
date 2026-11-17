@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 fw-bold">Canteen & AI Model Settings</h2>
+
+<div class="card p-4 col-md-6">
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Canteen Name / Location</label>
+            <input type="text" name="canteen_name" class="form-control" value="{{ config.canteen_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Total Student Capacity</label>
+            <input type="number" name="capacity" class="form-control" value="{{ config.capacity }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">AI Preparation Safety Buffer (%)</label>
+            <input type="number" step="0.5" name="safety_buffer_pct" class="form-control" value="{{ config.safety_buffer_pct }}" required>
+            <small class="text-muted">Extra percentage added to raw AI predictions to prevent food shortages.</small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">High-Waste Alert Threshold (%)</label>
+            <input type="number" step="0.5" name="waste_threshold_pct" class="form-control" value="{{ config.waste_threshold_pct }}" required>
+        </div>
+        <button type="submit" class="btn btn-success fw-bold">Save Preferences</button>
+    </form>
+</div>
+{% endblock %}

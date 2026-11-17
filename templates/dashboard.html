@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 fw-bold">Canteen Operations Dashboard</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card p-3 border-start border-primary border-4">
+            <small class="text-muted">Latest Predicted Demand</small>
+            <h3 class="fw-bold mt-1">{{ latest_pred.predicted_demand if latest_pred else 410 }} Meals</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 border-start border-warning border-4">
+            <small class="text-muted">7-Day Average Waste</small>
+            <h3 class="fw-bold mt-1">{{ waste_pct }}%</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 border-start border-success border-4">
+            <small class="text-muted">Waste Reduction vs Baseline</small>
+            <h3 class="fw-bold text-success mt-1">+{{ waste_reduction_pct }}%</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 border-start border-info border-4">
+            <small class="text-muted">Est. Weekly Cost Savings</small>
+            <h3 class="fw-bold mt-1">₹{{ est_savings }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5 class="fw-bold mb-3">Weekly Demand: Forecast vs. Actual</h5>
+            <canvas id="demandChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5 class="fw-bold mb-3">7-Day Food Prepared vs. Wasted (kg)</h5>
+            <canvas id="wasteChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    const dates = {{ dates | tojson }};
+    const actualSales = {{ actual_sales | tojson }};
+    const predictedSales = {{ predicted_sales | tojson }};
+    const preparedKg = {{ prepared_kg | tojson }};
+    const wastedKg = {{ wasted_kg | tojson }};
+
+    new Chart(document.getElementById('demandChart'), {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [
+                { label: 'Predicted Meals', data: predictedSales, borderColor: '#3b82f6', tension: 0.3 },
+                { label: 'Actual Meals Sold', data: actualSales, borderColor: '#10b981', tension: 0.3 }
+            ]
+        }
+    });
+
+    new Chart(document.getElementById('wasteChart'), {
+        type: 'bar',
+        data: {
+            labels: dates,
+            datasets: [
+                { label: 'Prepared (kg)', data: preparedKg, backgroundColor: '#6366f1' },
+                { label: 'Wasted (kg)', data: wastedKg, backgroundColor: '#ef4444' }
+            ]
+        }
+    });
+</script>
+{% endblock %}

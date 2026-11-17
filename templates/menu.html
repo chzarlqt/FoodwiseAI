@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 fw-bold">Daily Menu Management</h2>
+
+<div class="card p-4 mb-4">
+    <h5 class="fw-bold mb-3">Add New Menu Item</h5>
+    <form method="POST" class="row g-3">
+        <div class="col-md-4">
+            <input type="text" name="name" class="form-control" placeholder="Dish Name (e.g., Veg Biryani)" required>
+        </div>
+        <div class="col-md-3">
+            <select name="meal_type" class="form-select">
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Snacks">Snacks</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="base_demand" class="form-control" placeholder="Base Demand" value="250" required>
+        </div>
+        <div class="col-md-2">
+            <select name="waste_risk" class="form-select">
+                <option value="Low">Low Risk</option>
+                <option value="Medium">Medium Risk</option>
+                <option value="High">High Risk</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-success w-100">Add</button>
+        </div>
+    </form>
+</div>
+
+<div class="card p-4">
+    <h5 class="fw-bold mb-3">Active Canteen Menu Plans</h5>
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Dish Name</th>
+                <th>Meal Category</th>
+                <th>Expected Demand</th>
+                <th>Recommended Prep (kg)</th>
+                <th>Waste Risk Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td class="fw-bold">{{ item.name }}</td>
+                <td>{{ item.meal_type }}</td>
+                <td>{{ item.base_demand }} meals</td>
+                <td>{{ (item.base_demand * 0.40) | round(1) }} kg</td>
+                <td>
+                    <span class="badge bg-{{ 'danger' if item.waste_risk == 'High' else ('warning text-dark' if item.waste_risk == 'Medium' else 'success') }}">
+                        {{ item.waste_risk }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

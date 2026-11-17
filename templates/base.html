@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodWise AI - Smart Food Waste Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background-color: #f4f6f9; }
+        .sidebar { min-height: 100vh; background-color: #1e293b; color: white; }
+        .sidebar a { color: #cbd5e1; text-decoration: none; padding: 12px 20px; display: block; border-radius: 6px; margin: 4px 10px; }
+        .sidebar a:hover, .sidebar a.active { background-color: #10b981; color: white; font-weight: 500; }
+        .card { border: none; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block sidebar py-4">
+            <h4 class="text-center text-success fw-bold mb-4">FoodWise AI</h4>
+            <a href="/">Dashboard</a>
+            <a href="/predict">Demand Prediction</a>
+            <a href="/analytics">Waste Analytics</a>
+            <a href="/menu">Menu Management</a>
+            <a href="/attendance">Attendance</a>
+            <a href="/sales">Sales Data</a>
+            <a href="/reports">Reports</a>
+            <a href="/settings">Settings</a>
+        </nav>
+
+        <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
